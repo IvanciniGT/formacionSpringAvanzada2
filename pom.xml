@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.animalitos</groupId>
+  <artifactId>animalitos-entidades</artifactId>
+  <version>0.0.1</version>
+  <name>Entidades y Persistencia de los Animalitos</name>
+
+  <properties>
+	  <maven.compiler.source>1.8</maven.compiler.source>
+	  <maven.compiler.target>1.8</maven.compiler.target>
+	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+		<!-- Lombok, que me permite metyer getters, setters... y más en automático -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.28</version>
+		    <scope>provided</scope>
+		</dependency>
+		<!-- Me añade todo lo que necesito para trabajar con persistencia e Hibernate -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		    <version>2.7.15</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <version>2.7.15</version>
+		    <scope>test</scope> <!-- solo para las pruebas -->
+		</dependency>
+
+  </dependencies>
+
+</project>
+
