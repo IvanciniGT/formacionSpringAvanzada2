@@ -31,8 +31,30 @@
 		    <version>2.7.15</version>
 		    <scope>test</scope> <!-- solo para las pruebas -->
 		</dependency>
+		<!--
+		 Base de datos con persistencia en Memoria, ideal para pruebas
+		Y es brutal.. porque tiene integración directa con Spring.
+		Si no he configurado una BBDD real en Spring, pero Spring detecta que tengo disponible en el classpath una bbdd H2, 
+		la arranca y se configura para trabajar directamente contra ella 
+		-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>2.2.224</version>
+		    <scope>test</scope>
+		</dependency>
+	 </dependencies>
 
-  </dependencies>
 
+    <build>
+        <plugins>
+            <!-- Actualizamos el plugin surefire, que es el que sabe interpretar pruebas de Junit5...
+            las versiones más antiguas solo detectan pruebas con JUnit 4 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
-
