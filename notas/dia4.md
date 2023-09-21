@@ -12,4 +12,5 @@ Requisitos -> Defino pruebas -> Escribo código y voy ejecutando pruebas... hast
 
 	TEST-FIRST
 	+ Refactorización en cada iteración de pruebas
-	
+
+El escribir primero las pruebas, nos va a ayudar a definir el API que quiero... y validarlo.
