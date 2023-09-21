@@ -13,3 +13,18 @@ En maven tenemos también el concepto de módulo... y necesitamos utilizar
 Tendremos un proyecto maven nuevo que será mi SISTEMA! -> MODULOS
 En git también tenemos el concepto de módulo:
 	git submodule add
+	
+# Pruebas de Integración
+										       dummy
+animalitos-entidades	 <-	animalitos-service -> emails-service
+   (repositorio)                                 NO EXISTE
+        Unit                   Unit
+					  ^					   ^
+				 Integración				Integración
+				 
+Haré pruebas de sistema (JUNTANDO TODO)
+
+        UNITARIA:    AISLADO
+        INTEGRACION: COMUNICACION
+        SISTEMA:     COMPORTAMIENTO
+        
