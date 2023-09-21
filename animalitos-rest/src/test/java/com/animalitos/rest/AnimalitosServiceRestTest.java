@@ -1,5 +1,6 @@
 package com.animalitos.rest;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
@@ -8,8 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.animalitos.AplicacionDePrueba;
 
@@ -17,6 +22,7 @@ import com.animalitos.entity.Animalito;
 import com.animalitos.repository.AnimalitosRepository;
 import com.animalitos.service.EmailsService;
 
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
@@ -56,7 +62,12 @@ public class AnimalitosServiceRestTest {
 	// Variables propias de mi clase
 	private Animalito animalito;
 	private ResultActions resultado;
-	
+	private JSONObject objetoJson;
+	private MockHttpServletRequestBuilder constructorPeticion;
+	private String metodoHttp;
+	private String endPoint;
+	private long numeroDeAnimalesGuardadosInicialmente;
+
  	
 	public AnimalitosServiceRestTest(AnimalitosRepository miRepositorio, MockMvc clienteHttp) {
 		this.miRepositorio=miRepositorio;
@@ -99,22 +110,66 @@ public class AnimalitosServiceRestTest {
 	public void el_animalito_está_guardado_en_la_bbdd_dentro_de_la_tabla(String tabla) {
 		miRepositorio.save(animalito);
 	}
+
+	@Dado("el animalito no está guardado en la BBDD dentro de la tabla {string}")
+	public void el_animalito_no_está_guardado_en_la_bbdd_dentro_de_la_tabla(String tabla) {
+		Assertions.assertFalse(miRepositorio.existsById(animalito.getId()));
+	}
+	
+	@Dado("que tengo un objeto JSON,")
+	public void que_tengo_un_objeto_json() {
+		objetoJson = new JSONObject();
+	}
+	
+	@Dado("ese objeto JSON tiene por {string}: {string}")
+	public void ese_objeto_json_tiene_por(String campo, String valor) throws JSONException {
+		objetoJson.put(campo, valor);	
+	}
+	
+	@Dado("ese objeto JSON tiene por {string}: {int}")
+	public void ese_objeto_json_tiene_por(String campo, Integer valor) throws JSONException {
+		objetoJson.put(campo, valor);
+	}
+	
+	
+	
+	
+	
+	
 	
 	@Cuando("hacemos una petición por método {string} al servicio {string}")
 	public void hacemos_una_petición_por_método_al_servicio(String metodo, String endPoint) throws Exception {
-		switch(metodo.toUpperCase()) {
-		case "GET":
-			ResultActions resultado = clienteHttp.perform(MockMvcRequestBuilders.get(endPoint));
-			break;
-		}
+		constructorPeticion = null;
+		this.metodoHttp=metodo;
+		this.endPoint=endPoint;
 	}
 	
 	@Cuando("añado en el path de la petición el {string}: {int}")
 	public void añado_en_el_path_de_la_petición_el(String campo, Integer valor) {
+		endPoint+="/"+valor;
 	}
 
+	@Cuando("le mandamos el objeto JSON en el cuerpo de la petición")
+	public void le_mandamos_el_objeto_json_en_el_cuerpo_de_la_petición() {
+		crearPeticionHttp();
+		constructorPeticion.content(objetoJson.toString());
+	}
+	
+	private void crearPeticionHttp() {
+		switch(metodoHttp.toUpperCase()) {
+		case "GET":
+			constructorPeticion = MockMvcRequestBuilders.get(endPoint);
+			break;
+		case "POST":
+			constructorPeticion = MockMvcRequestBuilders.post(endPoint);
+			break;
+		}
+	}
+	
 	@Entonces("el servicio nos devuelve un código de estado {string}")
 	public void el_servicio_nos_devuelve_un_código_de_estado(String codigoEstado) throws Exception {
+		if(constructorPeticion == null)crearPeticionHttp();
+		resultado = clienteHttp.perform(constructorPeticion);
 		switch(codigoEstado.toUpperCase()) {
 			case "OK":
 				resultado.andExpect(status().isOk());
@@ -124,6 +179,8 @@ public class AnimalitosServiceRestTest {
 				break;
 		}
 	}
+		
+	
 	@Entonces("el servicio nos devuelve un objeto JSON,")
 	public void el_servicio_nos_devuelve_un_objeto_json() throws Exception {
 		resultado.andExpect(content().contentType("application/json"));
@@ -139,46 +196,89 @@ public class AnimalitosServiceRestTest {
 		resultado.andExpect(jsonPath("$."+campo).value(valor));
 	}
 	
-	@Dado("el animalito no está guardado en la BBDD dentro de la tabla {string}")
-	public void el_animalito_no_está_guardado_en_la_bbdd_dentro_de_la_tabla(String tabla) {
-	}
-	
-	@Dado("que tengo un objeto JSON,")
-	public void que_tengo_un_objeto_json() {
-	}
-	
-	@Dado("ese objeto JSON tiene por {string}: {string}")
-	public void ese_objeto_json_tiene_por(String campo, String valor) {
-	}
-	
-	@Dado("ese objeto JSON tiene por {string}: {int}")
-	public void ese_objeto_json_tiene_por(String campo, Integer valor) {
-	}
-	
-	@Cuando("le mandamos el objeto JSON en el cuerpo de la petición")
-	public void le_mandamos_el_objeto_json_en_el_cuerpo_de_la_petición() {
-	}
-	
-	
 	@Entonces("el objeto JSON tiene un {string} de tipo {string}")
-	public void el_objeto_json_tiene_un_de_tipo(String campo, String tipo) {
+	public void el_objeto_json_tiene_un_de_tipo(String campo, String tipo) throws Exception {
+		switch(tipo.toUpperCase()){
+			case "NUMERICO":
+				resultado.andExpect(jsonPath("$."+campo).isNumber());
+				break;		
+			case "BOOLEANO":
+				resultado.andExpect(jsonPath("$."+campo).isBoolean());
+				break;
+			case "TEXTO":
+				resultado.andExpect(jsonPath("$."+campo).isString());
+				break;
+		}
+	}
+	
+	
+	@Before // Se ejecuta antes de cada escenario
+	// @After
+	// @BeforeStep
+	// @AfterStep
+	public void contarAnimalesExistentesEnBBDD() {
+		numeroDeAnimalesGuardadosInicialmente = numeroActualDeAnimales();
+	}
+	
+	private long numeroActualDeAnimales() {
+		return miRepositorio.count();
 	}
 	
 	@Entonces("debe haberse creado una entrada en la BBDD dentro de la tabla {string}")
 	public void debe_haberse_creado_una_entrada_en_la_bbdd_dentro_de_la_tabla(String tabla) {
+		long numeroDeAnimalesGuardadosAlFinal = numeroActualDeAnimales();
+		Assertions.assertEquals(numeroDeAnimalesGuardadosInicialmente+1, numeroDeAnimalesGuardadosAlFinal);
 	}
+
+	@Entonces("no debe haberse creado una entrada en la BBDD dentro de la tabla {string}")
+	public void no_debe_haberse_creado_una_entrada_en_la_bbdd_dentro_de_la_tabla(String tabla) {
+		long numeroDeAnimalesGuardadosAlFinal = numeroActualDeAnimales();
+		Assertions.assertEquals(numeroDeAnimalesGuardadosInicialmente, numeroDeAnimalesGuardadosAlFinal);
+	}
+
+	private Animalito animalitoEnBBDD;
 	
 	@Entonces("con el {string} del animalito igual al {string} que nos ha devuelto el servicio")
-	public void con_el_del_animalito_igual_al_que_nos_ha_devuelto_el_servicio(String campo, String valor) {
-	}
+	public void con_el_del_animalito_igual_al_que_nos_ha_devuelto_el_servicio(String campo, String campo2) {
+		animalitoEnBBDD = miRepositorio.findById(Long.parseLong(jsonPath("$."+campo).toString())).get();
+		// TODO: REVISAR
+	}	
 	
 	@Entonces("con el {string} del animalito {string}")
 	public void con_el_del_animalito(String campo, String valor) {
+		switch(campo.toUpperCase()) {
+			case "NOMBRE":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getNombre());
+				break;
+			case "COLOR":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getColor());
+				break;
+			case "TIPO":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getTipo());
+				break;
+		}
 	}
-	
+
 	@Entonces("con la {string} del animalito {int}")
 	public void con_la_del_animalito(String campo, Integer valor) {
+		switch(campo.toUpperCase()) {
+			case "ID":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getId());
+				break;
+			case "EDAD":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getEdad());
+				break;
+		}	
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
 	
 	@Entonces("tiene que mandar un email a {string}")
 	public void tiene_que_mandar_un_email_a(String destinatario) {
@@ -191,10 +291,5 @@ public class AnimalitosServiceRestTest {
 	@Entonces("en el cuerpo del email tiene que aparecer el texto {string}")
 	public void en_el_cuerpo_del_email_tiene_que_aparecer_el_texto(String cuerpo) {
 	}
-	
-	@Entonces("no debe haberse creado una entrada en la BBDD dentro de la tabla {string}")
-	public void no_debe_haberse_creado_una_entrada_en_la_bbdd_dentro_de_la_tabla(String tabla) {
-	}
-
 	
 }
