@@ -18,7 +18,7 @@ Característica: Servicio REST de alta de animalitos v1
            Y ese objeto JSON tiene por "edad": <edad>
         Cuando hacemos una petición por método "POST" al servicio "/api/v1/animalitos"
            Y le mandamos el objeto JSON en el cuerpo de la petición
-        Entonces el servicio nos devuelve un código de estado "200"
+        Entonces el servicio nos devuelve un código de estado "OK"
            Y el servicio nos devuelve un objeto JSON,
            Y el objeto JSON tiene por "nombre": "<nombre>"
            Y el objeto JSON tiene por "tipo": "<tipo>"
