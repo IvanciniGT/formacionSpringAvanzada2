@@ -1,22 +1,15 @@
 package com.animalitos.service;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,9 +19,7 @@ import com.animalitos.AplicacionDePrueba;
 import com.animalitos.entity.Animalito;
 import com.animalitos.repository.AnimalitosRepository;
 import com.animalitos.service.dto.DatosAnimalito;
-import com.animalitos.service.dto.DatosNuevoAnimalito;
 import com.animalitos.service.mappers.Mapeador;
-import com.animalitos.service.testdoubles.ServicioEmailsSpy;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {AplicacionDePrueba.class}) // Arranca en segundo plano la app
