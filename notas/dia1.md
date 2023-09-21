@@ -316,6 +316,7 @@ TEST
                                 JS: Mocha, Jasmine, Jest
                                 .net: nunit, xunit, moq
                                 Pruebas de rendimiento: jmter, gatling, loadrunner
+                                Servicios web: postman, soapui, readyapi, karate
 
     Y estas pruebas dónde las hago? En la máquina del desarrollador? NO. Por qué? Esta maleao el entorno del desarrollador
                                     En la máquina del tester? NO. Por qué? Esta maleao el entorno del tester

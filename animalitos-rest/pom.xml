@@ -64,8 +64,32 @@
 		    <groupId>io.cucumber</groupId>
 		    <artifactId>cucumber-java</artifactId>
 		    <version>7.14.0</version>
+		    <scope>test</scope>
 		</dependency>
 
+		<!-- Me permite usar Suites de Pruebas, que se ejecuten a través de Otras herramienats (Como Cucumber) -->
+		<dependency>
+		    <groupId>org.junit.platform</groupId>
+		    <artifactId>junit-platform-suite</artifactId>
+		    <version>1.10.0</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- Nos permite que el platform se integre con Cucumber -->
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-junit-platform-engine</artifactId>
+		    <version>7.14.0</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- Permite a Cucumber solicitar dependencias de Spring -->
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-spring</artifactId>
+		    <version>7.14.0</version>
+		    <scope>test</scope>
+		</dependency>
+
+		
 	 </dependencies>
 
 

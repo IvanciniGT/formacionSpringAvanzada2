@@ -13,7 +13,7 @@ Característica: Servicio REST de recuperación de un animalito v1
             Y el animalito está guardado en la BBDD dentro de la tabla "animalitos"
         Cuando hacemos una petición por método "GET" al servicio "/api/v1/animalitos"
             Y añado en el path de la petición el "id": <id>
-        Entonces el servicio nos devuelve un código de estado "200"
+        Entonces el servicio nos devuelve un código de estado "OK"
            Y el servicio nos devuelve un objeto JSON,
            Y el objeto JSON tiene por "nombre": "<nombre>"
            Y el objeto JSON tiene por "tipo": "<tipo>"
@@ -34,7 +34,7 @@ Característica: Servicio REST de recuperación de un animalito v1
             Y el animalito no está guardado en la BBDD dentro de la tabla "animalitos"
         Cuando hacemos una petición por método "GET" al servicio "/api/v1/animalitos"
             Y añado en el path de la petición el "id": <id>
-        Entonces el servicio nos devuelve un código de estado "404"
+        Entonces el servicio nos devuelve un código de estado "NOT_FOUND"
            Y el servicio nos devuelve un objeto JSON,
            Y el objeto JSON tiene por "error": "No se ha encontrado el animalito con id <id>"
 
