@@ -36,7 +36,7 @@ public class AnimalitosServiceRest {
 	public ResponseEntity<DatosAnimalitoRest> recuperarAnimalito(@PathVariable("id") long id) {
 		try {
 			Optional<DatosAnimalito> animalito = servicio.recuperarAnimalito(id);
-			if(animalito.isEmpty()) {
+			if(!animalito.isPresent()) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}else {
 				return new ResponseEntity<>(miMapeador.datosAnimalito2DatosAnimalitoRest(animalito.get()) ,HttpStatus.OK);

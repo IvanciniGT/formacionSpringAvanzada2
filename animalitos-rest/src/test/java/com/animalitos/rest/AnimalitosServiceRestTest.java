@@ -108,7 +108,7 @@ public class AnimalitosServiceRestTest {
 		
 	@Dado("el animalito está guardado en la BBDD dentro de la tabla {string}")
 	public void el_animalito_está_guardado_en_la_bbdd_dentro_de_la_tabla(String tabla) {
-		miRepositorio.save(animalito);
+		animalito = miRepositorio.save(animalito);
 	}
 
 	@Dado("el animalito no está guardado en la BBDD dentro de la tabla {string}")
@@ -150,9 +150,9 @@ public class AnimalitosServiceRestTest {
 		this.endPoint=endPoint;
 	}
 	
-	@Cuando("añado en el path de la petición el {string}: {int}")
-	public void añado_en_el_path_de_la_petición_el(String campo, Integer valor) {
-		endPoint+="/"+valor;
+	@Cuando("añado en el path de la petición el {string} que tiene el animalito")
+	public void añado_en_el_path_de_la_petición_el(String campo) {
+		endPoint+="/"+animalito.getId();
 	}
 
 	@Cuando("le mandamos el objeto JSON en el cuerpo de la petición")
@@ -203,6 +203,11 @@ public class AnimalitosServiceRestTest {
 	@Entonces("el objeto JSON tiene por {string}: {int}")
 	public void el_objeto_json_tiene_por(String campo, Integer valor) throws Exception {
 		resultado.andExpect(jsonPath("$."+campo).value(valor));
+	}
+	@Entonces("el objeto JSON tiene por {string} el {string} que tiene el animalito")
+	public void el_objeto_json_tiene_por(String campo, String campo2) throws Exception {
+																//campo2 = "id"
+		resultado.andExpect(jsonPath("$."+campo).value(animalito.getId()));
 	}
 	
 	@Entonces("el objeto JSON tiene un {string} de tipo {string}")
