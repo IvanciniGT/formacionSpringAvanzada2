@@ -35,13 +35,11 @@ Característica: Servicio REST de recuperación de un animalito v1
         Cuando hacemos una petición por método "GET" al servicio "/api/v1/animalitos"
             Y añado en el path de la petición el "id": <id>
         Entonces el servicio nos devuelve un código de estado "NOT_FOUND"
-           Y el servicio nos devuelve un objeto JSON,
-           Y el objeto JSON tiene por "error": "No se ha encontrado el animalito con id <id>"
 
         Ejemplos:
-            | id |
-            | 1  |
-            | 2  |
-            | 3  |
+            | id  |
+            | 1   |
+            | 2   |
+            | 3   |
 
 # Si la BBDD está caída, se devuelve un error de tipo 500

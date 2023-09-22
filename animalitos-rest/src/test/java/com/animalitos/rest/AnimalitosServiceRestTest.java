@@ -113,7 +113,13 @@ public class AnimalitosServiceRestTest {
 
 	@Dado("el animalito no está guardado en la BBDD dentro de la tabla {string}")
 	public void el_animalito_no_está_guardado_en_la_bbdd_dentro_de_la_tabla(String tabla) {
-		Assertions.assertFalse(miRepositorio.existsById(animalito.getId()));
+		// Entonces: Son los asserts
+		// Assertions.assertFalse(miRepositorio.existsById(animalito.getId()));
+		// Me estoy pasando por las narices: fIrst
+		// El test no es INDEPENDIENTE de otros test. NO FIJA SUS CONDICIONES
+		// Sino simplementes confía en que las condiciones se den.
+		miRepositorio.deleteById(animalito.getId());
+		// Ahora el test es independiente de otros.. que otros han creado esos animalitos con ese id. Me los cargo.
 	}
 	
 	@Dado("que tengo un objeto JSON,")
@@ -152,7 +158,7 @@ public class AnimalitosServiceRestTest {
 	@Cuando("le mandamos el objeto JSON en el cuerpo de la petición")
 	public void le_mandamos_el_objeto_json_en_el_cuerpo_de_la_petición() {
 		crearPeticionHttp();
-		constructorPeticion.content(objetoJson.toString());
+		constructorPeticion.contentType("application/json").content(objetoJson.toString());
 	}
 	
 	private void crearPeticionHttp() {
@@ -176,6 +182,9 @@ public class AnimalitosServiceRestTest {
 				break;
 			case "NOT_FOUND":
 				resultado.andExpect(status().isNotFound());
+				break;
+			case "BAD_REQUEST":
+				resultado.andExpect(status().isBadRequest());
 				break;
 		}
 	}
@@ -239,9 +248,9 @@ public class AnimalitosServiceRestTest {
 	private Animalito animalitoEnBBDD;
 	
 	@Entonces("con el {string} del animalito igual al {string} que nos ha devuelto el servicio")
-	public void con_el_del_animalito_igual_al_que_nos_ha_devuelto_el_servicio(String campo, String campo2) {
-		animalitoEnBBDD = miRepositorio.findById(Long.parseLong(jsonPath("$."+campo).toString())).get();
-		// TODO: REVISAR
+	public void con_el_del_animalito_igual_al_que_nos_ha_devuelto_el_servicio(String campo, String campo2) throws Exception, JSONException {
+		Long id = new JSONObject(resultado.andReturn().getResponse().getContentAsString()).getLong("id");
+		animalitoEnBBDD = miRepositorio.findById(id).get();
 	}	
 	
 	@Entonces("con el {string} del animalito {string}")

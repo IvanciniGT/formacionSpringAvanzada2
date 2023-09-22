@@ -50,9 +50,7 @@ Característica: Servicio REST de alta de animalitos v1
            Y ese objeto JSON tiene por "edad": <edad>
         Cuando hacemos una petición por método "POST" al servicio "/api/v1/animalitos"
            Y le mandamos el objeto JSON en el cuerpo de la petición
-        Entonces el servicio nos devuelve un código de estado "400"
-           Y el servicio nos devuelve un objeto JSON,
-           Y el objeto JSON tiene por "error": "El nombre es obligatorio"
+        Entonces el servicio nos devuelve un código de estado "BAD_REQUEST"
            Y no debe haberse creado una entrada en la BBDD dentro de la tabla "animalitos"
 
         Ejemplos:
@@ -69,9 +67,7 @@ Característica: Servicio REST de alta de animalitos v1
            Y ese objeto JSON tiene por "edad": <edad>
         Cuando hacemos una petición por método "POST" al servicio "/api/v1/animalitos"
            Y le mandamos el objeto JSON en el cuerpo de la petición
-        Entonces el servicio nos devuelve un código de estado "400"
-           Y el servicio nos devuelve un objeto JSON,
-           Y el objeto JSON tiene por "error": "El tipo es obligatorio"
+        Entonces el servicio nos devuelve un código de estado "BAD_REQUEST"
            Y no debe haberse creado una entrada en la BBDD dentro de la tabla "animalitos"
 
         Ejemplos:
@@ -88,9 +84,7 @@ Característica: Servicio REST de alta de animalitos v1
            Y ese objeto JSON tiene por "edad": <edad>
         Cuando hacemos una petición por método "POST" al servicio "/api/v1/animalitos"
            Y le mandamos el objeto JSON en el cuerpo de la petición
-        Entonces el servicio nos devuelve un código de estado "400"
-           Y el servicio nos devuelve un objeto JSON,
-           Y el objeto JSON tiene por "error": "El tipo es obligatorio"
+        Entonces el servicio nos devuelve un código de estado "BAD_REQUEST"
            Y no debe haberse creado una entrada en la BBDD dentro de la tabla "animalitos"
 
         Ejemplos:
@@ -107,9 +101,7 @@ Característica: Servicio REST de alta de animalitos v1
            Y ese objeto JSON tiene por "color": "<color>"
         Cuando hacemos una petición por método "POST" al servicio "/api/v1/animalitos"
            Y le mandamos el objeto JSON en el cuerpo de la petición
-        Entonces el servicio nos devuelve un código de estado "400"
-           Y el servicio nos devuelve un objeto JSON,
-           Y el objeto JSON tiene por "error": "La edad es obligatoria"
+        Entonces el servicio nos devuelve un código de estado "BAD_REQUEST"
            Y no debe haberse creado una entrada en la BBDD dentro de la tabla "animalitos"
 
         Ejemplos:

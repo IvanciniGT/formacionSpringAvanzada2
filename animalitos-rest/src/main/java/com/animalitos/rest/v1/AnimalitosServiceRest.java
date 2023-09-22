@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,8 +61,8 @@ public class AnimalitosServiceRest {
 		}
 	}
 	
-	@PostMapping("/animalitos")
-	public ResponseEntity<DatosAnimalitoRest> altaAnimalito(DatosNuevoAnimalitoRest datosNuevoAnimalito) {
+	@PostMapping("/animalitos")											 // Esto es un JSON que me mandan en el cuerpo del request http
+	public ResponseEntity<DatosAnimalitoRest> altaAnimalito(@RequestBody DatosNuevoAnimalitoRest datosNuevoAnimalito) {
 		try {
 			DatosAnimalito animalito = servicio.altaAnimalito( miMapeador.datosAnimalitoRest2DatosAnimalito(datosNuevoAnimalito) );
 				return new ResponseEntity<>(miMapeador.datosAnimalito2DatosAnimalitoRest(animalito) ,HttpStatus.OK);
