@@ -1,0 +1,11 @@
+# El archivo de configuración de mi app para Spring
+
+# Contra qué BBDD trabajo
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/curso_springboot?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #Dialecto de la BBDD

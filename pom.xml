@@ -14,5 +14,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
     <module>animalitos-servicio</module>
     <module>email-servicio</module>
     <module>animalitos-rest</module>
+    <module>aplicacion</module>
   </modules>
 </project>

@@ -101,6 +101,33 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
+                <!--
+                Aqui meteré configuración para que en fase TEST se ejecuten los archivos *Test.class que no acaben como *IntegrationTest.class 
+                En fase intgegration-test - Los archivos que aceben en *IntegrationTest.class>
+                -->
+                  <configuration>
+			        <excludes>
+			          <exclude>**/*IntegrationTest.java</exclude>
+			        </excludes>
+			      </configuration>
+			      <executions>
+			        <execution>
+			          <id>integration-test</id>
+			          <goals>
+			            <goal>test</goal>
+			          </goals>
+			          <phase>integration-test</phase>
+			          <configuration>
+			            <excludes>
+			              <exclude>none</exclude>
+			            </excludes>
+			            <includes>
+			              <include>**/*IntegrationTest.java</include>
+			            </includes>
+			          </configuration>
+			        </execution>
+			      </executions>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
