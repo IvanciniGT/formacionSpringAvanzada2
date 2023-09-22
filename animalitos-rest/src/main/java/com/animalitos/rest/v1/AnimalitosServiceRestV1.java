@@ -21,12 +21,12 @@ import com.animalitos.service.dto.DatosAnimalito;
 
 @RestController
 @RequestMapping("/api/v1")
-public class AnimalitosServiceRest {
+public class AnimalitosServiceRestV1 {
 
 	private AnimalitosService servicio ;
 	private Mapeador miMapeador;
 	
-	public AnimalitosServiceRest(AnimalitosService servicio, Mapeador miMapeador) {
+	public AnimalitosServiceRestV1(AnimalitosService servicio, Mapeador miMapeador) {
 		this.servicio = servicio;
 		this.miMapeador = miMapeador;
 	}

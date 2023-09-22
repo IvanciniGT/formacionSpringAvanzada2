@@ -88,6 +88,7 @@ public class AnimalitosServiceIntegrationTest {
 		elAnimalito.setColor("rojo");
 		elAnimalito.setEdad(3);
 		elAnimalito.setTipo("perro");
+		elAnimalito.setPeso(5);
 		// Y que el repositorio lo va a devolver cuando le pidan que lo guarde
 		Animalito animalitoGuardado = miRepositorio.save(elAnimalito);
 		// Cuando pido el animalito
@@ -130,6 +131,7 @@ public class AnimalitosServiceIntegrationTest {
 		animalito.setEdad(edad);
 		animalito.setColor(color);
 		animalito.setTipo(tipo);
+		animalito.setPeso(5);
 		return animalito;
 	}
 	

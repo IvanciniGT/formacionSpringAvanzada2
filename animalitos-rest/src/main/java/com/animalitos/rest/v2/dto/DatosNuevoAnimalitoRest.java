@@ -1,14 +1,14 @@
-package com.animalitos.rest.v1.dto;
+package com.animalitos.rest.v2.dto;
 
 import lombok.Data;
 
 @Data // Mete @Getter @Setter @Equals...
 public class DatosNuevoAnimalitoRest {
-	private String nombre;
-	private String tipo;
+	private String name;
+	private String type;
 	private String color;
-	private Integer edad;
-	private Integer peso = 0;
+	private Integer age;
+	private Integer weight;
 }
 
 // Esto debe tener una documentación: Swagger / OpenAPI (swagger v3)

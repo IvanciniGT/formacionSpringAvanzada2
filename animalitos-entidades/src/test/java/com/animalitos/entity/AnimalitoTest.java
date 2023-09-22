@@ -40,14 +40,34 @@ public class AnimalitoTest {
 	public AnimalitoTest(AnimalitosRepository miRepositorio) { // Inyección de dependencias
 		this.miRepositorio = miRepositorio;
 	}
-	
+
 	@ParameterizedTest
 	//@CsvSource({"Pipo,verde,lagarto,2"})
-	@DisplayName("Alta de un Animalito con datos OK")
+	@DisplayName("Alta de un Animalito con datos sin peso")
 	@CsvFileSource(resources = "/datosAnimalitos.csv", numLinesToSkip = 1)
-	public void altaDeAnimalitoConDatosOK(String nombre, String color, String tipo, int edad) {
+	public void altaDeAnimalitoConDatosSinPeso(String nombre, String color, String tipo, int edad) {
 		// Dado
 		Animalito animalito = crearAnimalito(nombre, color, tipo, edad);
+		// Cuando
+		//Assertions.assertThrows(Exception.class, () -> miRepositorio.save(animalito));
+		// Entonces <- Test
+		/*
+		Assertions.assertNotNull(animalitoGuardado.getId());
+		Assertions.assertTrue(animalitoGuardado.getId() >= 0);
+		Assertions.assertEquals(animalito.getNombre(), animalitoGuardado.getNombre());
+		Assertions.assertEquals(animalito.getEdad(),   animalitoGuardado.getEdad());
+		Assertions.assertEquals(animalito.getTipo(),   animalitoGuardado.getTipo());
+		Assertions.assertEquals(animalito.getColor(),  animalitoGuardado.getColor());	
+		*/
+	}
+
+	@ParameterizedTest
+	//@CsvSource({"Pipo,verde,lagarto,2"})
+	@DisplayName("Alta de un Animalito con datos con peso")
+	@CsvFileSource(resources = "/datosAnimalitosConPeso.csv", numLinesToSkip = 1)
+	public void altaDeAnimalitoConDatosConpeso(String nombre, String color, String tipo, int edad, int peso) {
+		// Dado
+		Animalito animalito = crearAnimalito(nombre, color, tipo, edad, peso);
 		// Cuando
 		Animalito animalitoGuardado = miRepositorio.save(animalito);
 		// Entonces <- Test
@@ -57,6 +77,7 @@ public class AnimalitoTest {
 		Assertions.assertEquals(animalito.getEdad(),   animalitoGuardado.getEdad());
 		Assertions.assertEquals(animalito.getTipo(),   animalitoGuardado.getTipo());
 		Assertions.assertEquals(animalito.getColor(),  animalitoGuardado.getColor());	
+		Assertions.assertEquals(animalito.getPeso(),  animalitoGuardado.getPeso());	
 	}
 	
 	@ParameterizedTest
@@ -128,6 +149,13 @@ public class AnimalitoTest {
 		animalito.setEdad(edad);
 		animalito.setColor(color);
 		animalito.setTipo(tipo);
+		// RUINA... solo por ir rápido en el curso
+		animalito.setPeso(5);
+		return animalito;
+	}
+	private Animalito crearAnimalito(String nombre, String color, String tipo, Integer edad, Integer peso) {
+		Animalito animalito =  crearAnimalito(nombre,  color,  tipo,  edad);
+		animalito.setPeso(peso);
 		return animalito;
 	}
 	

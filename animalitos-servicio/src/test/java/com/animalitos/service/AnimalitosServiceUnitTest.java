@@ -97,6 +97,7 @@ public class AnimalitosServiceUnitTest {
 		Assertions.assertEquals(elAnimalito.getColor(), datosAnimalitoExistente.getColor());
 		Assertions.assertEquals(elAnimalito.getTipo(), datosAnimalitoExistente.getTipo());
 		Assertions.assertEquals(elAnimalito.getEdad(), datosAnimalitoExistente.getEdad());
+		Assertions.assertNull(datosAnimalitoExistente.getPeso());
 		Assertions.assertEquals(elAnimalito.getId(), datosAnimalitoExistente.getId());
 	}
 	
@@ -111,6 +112,7 @@ public class AnimalitosServiceUnitTest {
 		elAnimalito.setEdad(3);
 		elAnimalito.setId(33L);
 		elAnimalito.setTipo("perro");
+		elAnimalito.setPeso(5);
 		
 		DatosNuevoAnimalito nuevo = miMapeador.animalito2DatosNuevoAnimalito(elAnimalito); // Sin ID
 		
@@ -129,6 +131,7 @@ public class AnimalitosServiceUnitTest {
 		Assertions.assertEquals(elAnimalito.getColor(), animalitoQueRecibeElRepositorio.getValue().getColor());
 		Assertions.assertEquals(elAnimalito.getTipo(), animalitoQueRecibeElRepositorio.getValue().getTipo());
 		Assertions.assertEquals(elAnimalito.getEdad(), animalitoQueRecibeElRepositorio.getValue().getEdad());
+		Assertions.assertEquals(elAnimalito.getPeso(), animalitoQueRecibeElRepositorio.getValue().getPeso());
 		Assertions.assertNull(animalitoQueRecibeElRepositorio.getValue().getId());
 		
 		// - Que me devuelva unos datos de animalito que incluyan los datos guays y el id
@@ -136,6 +139,7 @@ public class AnimalitosServiceUnitTest {
 		Assertions.assertEquals(elAnimalito.getColor(), datosAnimalitoGuardado.getColor());
 		Assertions.assertEquals(elAnimalito.getTipo(), datosAnimalitoGuardado.getTipo());
 		Assertions.assertEquals(elAnimalito.getEdad(), datosAnimalitoGuardado.getEdad());
+		Assertions.assertEquals(elAnimalito.getPeso(), datosAnimalitoGuardado.getPeso());
 		Assertions.assertEquals(elAnimalito.getId(), datosAnimalitoGuardado.getId());
 		// - Que se haya solicitado el envío del email
 		// Compruebo lo que el Servicio mandó al servicio de Emails
@@ -155,17 +159,18 @@ public class AnimalitosServiceUnitTest {
 	
 	public List<Animalito> listaDeAnimalitos(){
 		return Arrays.asList(
-				crearAnimalito("pipo","perro","rojo",3),
-				crearAnimalito("pepe","gato","verde",2),
-				crearAnimalito("lucrecia","elefante","azul",1)
+				crearAnimalito("pipo","perro","rojo",3,null),
+				crearAnimalito("pepe","gato","verde",2,5),
+				crearAnimalito("lucrecia","elefante","azul",1,13)
 				);
 	}
-	private Animalito crearAnimalito(String nombre, String tipo, String color, int edad) {
+	private Animalito crearAnimalito(String nombre, String tipo, String color, int edad, Integer peso) {
 		Animalito animalito = new Animalito();
 		animalito.setNombre(nombre);
 		animalito.setEdad(edad);
 		animalito.setColor(color);
 		animalito.setTipo(tipo);
+		animalito.setPeso(peso);
 		return animalito;
 	}
 	

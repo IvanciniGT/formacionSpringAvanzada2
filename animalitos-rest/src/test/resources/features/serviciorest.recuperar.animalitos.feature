@@ -9,6 +9,7 @@ Característica: Servicio REST de recuperación de un animalito v1
             Y ese animalito tiene por "edad": <edad>
             Y ese animalito tiene por "tipo": "<tipo>"
             Y ese animalito tiene por "color": "<color>"
+            Y ese animalito tiene por "peso": <peso>
             Y el animalito está guardado en la BBDD dentro de la tabla "animalitos"
         Cuando hacemos una petición por método "GET" al servicio "/api/v1/animalitos"
             Y añado en el path de la petición el "id" que tiene el animalito 
@@ -18,13 +19,14 @@ Característica: Servicio REST de recuperación de un animalito v1
            Y el objeto JSON tiene por "tipo": "<tipo>"
            Y el objeto JSON tiene por "color": "<color>"
            Y el objeto JSON tiene por "edad": <edad>
+           Y el objeto JSON tiene por "peso": <peso>
            Y el objeto JSON tiene por "id" el "id" que tiene el animalito
 
         Ejemplos:
-            | nombre | edad | tipo    | color  | 
-            | Pipo   | 2    | perro   | marrón | 
-            | Miau   | 1    | gato    | blanco | 
-            | Pepa   | 3    | pájaro  | verde  | 
+            | nombre | edad | tipo    | color  | peso |
+            | Pipo   | 2    | perro   | marrón |  1   |
+            | Miau   | 1    | gato    | blanco |  2   |
+            | Pepa   | 3    | pájaro  | verde  |  3   |
 
     Esquema del escenario: Cuando se solicita la información de un animalito dado un id, que no exista en la BBDD, se devuelve un error
         # Condiciones que deben darse para que la prueba pueda ejecutarse

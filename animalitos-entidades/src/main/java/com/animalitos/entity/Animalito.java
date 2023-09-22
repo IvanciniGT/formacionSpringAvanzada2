@@ -27,8 +27,11 @@ public class Animalito {
 	
 	@Column(updatable = false, length = 50, nullable = false)
 	private String color;
-	
+
 	@Column(updatable = true, nullable = false)
 	private Integer edad;
+
+	@Column(updatable = true, nullable = false)
+	private Integer peso;
 	
 }

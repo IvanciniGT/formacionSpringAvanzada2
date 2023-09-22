@@ -8,4 +8,5 @@ public class DatosNuevoAnimalito {
 	private String tipo;
 	private String color;
 	private Integer edad;
+	private Integer peso;
 }

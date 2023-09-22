@@ -103,6 +103,9 @@ public class AnimalitosServiceRestTest {
 			case "EDAD":
 				animalito.setEdad(valor);
 				break;
+			case "PESO":
+				animalito.setPeso(valor);
+				break;
 		}	
 	}
 		
@@ -118,7 +121,10 @@ public class AnimalitosServiceRestTest {
 		// Me estoy pasando por las narices: fIrst
 		// El test no es INDEPENDIENTE de otros test. NO FIJA SUS CONDICIONES
 		// Sino simplementes confía en que las condiciones se den.
-		miRepositorio.deleteById(animalito.getId());
+		
+		try{
+			miRepositorio.deleteById(animalito.getId());
+		}catch(Exception e) {}
 		// Ahora el test es independiente de otros.. que otros han creado esos animalitos con ese id. Me los cargo.
 	}
 	
@@ -281,6 +287,9 @@ public class AnimalitosServiceRestTest {
 				break;
 			case "EDAD":
 				Assertions.assertEquals(valor, animalitoEnBBDD.getEdad());
+				break;
+			case "PESO":
+				Assertions.assertEquals(valor, animalitoEnBBDD.getPeso());
 				break;
 		}	
 	}
